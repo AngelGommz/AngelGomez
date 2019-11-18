@@ -11,7 +11,7 @@ class ControladorForm extends Controller
         return view('Administrador/Admin');
     }
     public function InserDep(){
-        $data = request()->all();
+                $data = request()->all();
         
         DB::insert('INSERT INTO depositos 
                 (Descripcion, Total, Fecha_Creacion) VALUE 
@@ -20,5 +20,10 @@ class ControladorForm extends Controller
                 "'.$data['FECHA'].'");');
         return view('Administrador/Admin');
         //Al refrescar la pagina se incerta nuevamente el campo, no e econtrado la manera paraa que se borre la variable
+    }
+    
+    public function DeleteDep($id){
+        DB::delete('DELETE FROM depositos WHERE id ="'.$id.'";' );
+        return view('Administrador/Admin');
     }
 }

@@ -67,7 +67,11 @@ $depositos = DB::select('SELECT * FROM depositos ORDER BY Estatus');
                                         @if($dep->Estatus == 0)
                                         <td>PENDIENTE</td>
                                         <td><button type="button" class="btn btn-primary col-12">EDITAR</button></td>
-                                        <td><button type="button" class="btn btn-danger col-12">ELIMINAR</button></td>
+                                        <td>
+                                            <a href="{{ url('/Admin/Eliminar/'.$dep->id) }}">
+                                                <button type="button" class="btn btn-danger col-12">ELIMINAR</button>
+                                            </a>
+                                        </td>
                                         @elseif($dep->Estatus == 1)
                                         <td>ABONADO</td>
                                         <td><button type="button" class="btn btn-primary col-12">EDITAR</button></td>

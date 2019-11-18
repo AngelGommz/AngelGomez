@@ -19,5 +19,6 @@ Route::get('/', function () {
 
 Route:: get('/Admin', 'ControladorForm@Admin');
 Route:: post('/Admin', 'ControladorForm@InserDep');
+Route:: get('/Admin/Eliminar/{id}', 'ControladorForm@DeleteDep');
 
 
