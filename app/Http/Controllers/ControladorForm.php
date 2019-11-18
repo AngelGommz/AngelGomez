@@ -11,7 +11,7 @@ class ControladorForm extends Controller
         return view('Administrador/Admin');
     }
     public function InserDep(){
-                $data = request()->all();
+        $data = request()->all();
         
         DB::insert('INSERT INTO depositos 
                 (Descripcion, Total, Fecha_Creacion) VALUE 
@@ -24,6 +24,19 @@ class ControladorForm extends Controller
     
     public function DeleteDep($id){
         DB::delete('DELETE FROM depositos WHERE id ="'.$id.'";' );
+        return view('Administrador/Admin');
+    }
+    
+    public function UpdateDep($id){
+        return view('Administrador/Depositos', compact('id'));
+    }
+    public function UpdateDep2($id){
+        $data = request()->all();
+        DB::update('UPDATE depositos
+                    SET Descripcion = "'.$data['DESCR'].'",
+                    Total = "'.$data['CANTI'].'",
+                    Fecha_Creacion = "'.$data['FECHA'].'"
+                    WHERE id = "'.$id.'";');
         return view('Administrador/Admin');
     }
 }
