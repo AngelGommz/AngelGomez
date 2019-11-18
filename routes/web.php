@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +17,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/Admin', function () {
-    return view('Administrador/Admin');
-});
+Route:: get('/Admin', 'ControladorForm@Admin');
+Route:: post('/Admin', 'ControladorForm@InserDep');
+
 

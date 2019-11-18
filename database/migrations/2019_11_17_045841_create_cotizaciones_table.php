@@ -15,10 +15,10 @@ class CreateCotizacionesTable extends Migration
     {
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('Folio');
-            $table->string('Cliente');
-            $table->string('Auto');
-            $table->string('Precio');
+            $table->string('Folio',10);
+            $table->string('Cliente',60);
+            $table->string('Auto',30);
+            $table->string('Precio',10);
             $table->date('Fecha_Creacion');
             $table->timestamps();
         });

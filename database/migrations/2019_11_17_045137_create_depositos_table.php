@@ -15,8 +15,8 @@ class CreateDepositosTable extends Migration
     {
         Schema::create('depositos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('Descripcion');
-            $table->string('Total');
+            $table->string('Descripcion', 255);
+            $table->string('Total', 10);
             $table->date('Fecha_Creacion');
             $table->timestamps();
         });
