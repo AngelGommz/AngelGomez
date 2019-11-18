@@ -18,13 +18,12 @@ class ControladorForm extends Controller
                 ("'.$data['DESCR'].'",
                 "'.$data['CANTI'].'",
                 "'.$data['FECHA'].'");');
-        return view('Administrador/Admin');
-        //Al refrescar la pagina se incerta nuevamente el campo, no e econtrado la manera paraa que se borre la variable
+        return redirect('/Admin');
     }
     
     public function DeleteDep($id){
         DB::delete('DELETE FROM depositos WHERE id ="'.$id.'";' );
-        return view('Administrador/Admin');
+        return redirect('/Admin');
     }
     
     public function UpdateDep($id){
@@ -37,6 +36,6 @@ class ControladorForm extends Controller
                     Total = "'.$data['CANTI'].'",
                     Fecha_Creacion = "'.$data['FECHA'].'"
                     WHERE id = "'.$id.'";');
-        return view('Administrador/Admin');
+        return redirect('/Admin');
     }
 }
