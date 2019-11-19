@@ -1,6 +1,10 @@
 <?php 
 use Illuminate\Support\Facades\DB;
-$depositos = DB::select('SELECT * FROM depositos WHERE id = "'.$id.'"');
+$depositos = DB::select('SELECT D.id,D.Descripcion,D.Total,D.Fecha_Creacion,TR.id_Dep,TR.id_Cot,SUM(TR.Cantidad) AS Cantidad 
+                            FROM depositos As D 
+                            LEFT JOIN rel_cot_deps as TR ON D.id = TR.id_Dep
+                            WHERE D.id = "'.$id.'"
+                            GROUP BY D.id,D.Descripcion,D.Total,D.Fecha_Creacion,TR.id_Dep,TR.id_Cot;');
 ?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -30,15 +34,15 @@ $depositos = DB::select('SELECT * FROM depositos WHERE id = "'.$id.'"');
                             {!! csrf_field() !!}
                             <div class="form-group col-12">
                                 <label>DESCRIPCIÓN</label>
-                                <input type="text" class="form-control" value="{{$dep->Descripcion }}" name="DESCR">
+                                <input type="text" class="form-control" value="{{$dep->Descripcion }}" name="DESCR" required>
                             </div>
                             <div class="form-group col-6">
                                 <label>CANTIDAD</label>
-                                <input type="text" class="form-control" value="{{$dep->Total }}" name="CANTI">
+                                <input type="number" min="{{$dep->Cantidad }}" class="form-control" value="{{$dep->Total }}" name="CANTI" required>
                             </div>
                             <div class="form-group col-6">
                                 <label>FECHA</label>
-                                <input type="date" class="form-control" value="{{$dep->Fecha_Creacion }}" name="FECHA">
+                                <input type="date" class="form-control" value="{{$dep->Fecha_Creacion }}" name="FECHA" required>
                             </div>
                             <button type="submit" class="btn btn-primary col-4 offset-8">EDITAR</button>
                         </form>

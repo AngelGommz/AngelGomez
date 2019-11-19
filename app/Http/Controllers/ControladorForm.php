@@ -41,7 +41,6 @@ class ControladorForm extends Controller
     public function Usua(){return view('Usuario/Usuario');}
     public function InserCot(){
         $data = request()->all();
-        
         DB::insert('INSERT INTO cotizaciones 
                 (`Folio`,`Cli_Nom`,`Cli_Email`,`Cli_Direccion`,`Aut_Marca`,`Aut_Modelo`,`Aut_Azo`,`Precio`,`Fecha_Creacion`) VALUE 
                 ("'.$data['DatCot01'].'",
@@ -55,7 +54,34 @@ class ControladorForm extends Controller
                 "'.date("Y-m-d").'");');
         return redirect('/Usuario');
     }
-    
+    public function UpdateCot($id){
+        return view('Usuario/Editar', compact('id'));
+    }
+    public function UpdateCot2($id){
+        $data = request()->all();
+        DB::update('UPDATE cotizaciones
+                    SET Folio       = "'.$data['DatCot01'].'",
+                    Cli_Nom         = "'.$data['DatCot02'].'",
+                    Cli_Email       = "'.$data['DatCot03'].'",
+                    Cli_Direccion   = "'.$data['DatCot04'].'",
+                    Aut_Marca       = "'.$data['DatCot05'].'",
+                    Aut_Modelo      = "'.$data['DatCot06'].'",
+                    Aut_Azo         = "'.$data['DatCot07'].'",
+                    Precio          = "'.$data['DatCot08'].'"
+                    WHERE id = "'.$id.'";');
+        return redirect('/Usuario');
+    }
+    public function UpdateAbo($id){
+        return view('Usuario/Abonar', compact('id'));
+    }
+    public function InstAbo($id){
+        $data = request()->all();
+        DB::insert('INSERT INTO rel_cot_deps (id_Dep,id_Cot,Cantidad) VALUES (
+                    "'.$data['DatCot01'].'",
+                    "'.$id.'",
+                    "'.$data['DatCot02'].'");');
+        return redirect('/Usuario/Abonar/'.$id);
+    }
 }
 
 

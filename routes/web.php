@@ -26,3 +26,8 @@ Route:: post('/Admin/Update/{id}', 'ControladorForm@UpdateDep2');
 
 Route:: get('/Usuario', 'ControladorForm@Usua');
 Route:: post('/Cotizacion', 'ControladorForm@InserCot');
+Route:: get('/Usuario/Editar/{id}', 'ControladorForm@UpdateCot');
+Route:: post('/Usuario/Update/{id}', 'ControladorForm@Updatecot2');
+Route:: get('/Usuario/Abonar/{id}', 'ControladorForm@UpdateAbo');
+Route:: post('/Usuario/InseAbo/{id}', 'ControladorForm@InstAbo');
+

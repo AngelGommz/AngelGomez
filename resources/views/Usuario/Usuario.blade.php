@@ -1,6 +1,10 @@
 <?php 
 use Illuminate\Support\Facades\DB;
-$cotizaciones = DB::select('SELECT * FROM cotizaciones ORDER BY Folio');
+$cotizaciones = DB::select('SELECT C.id,C.Folio,C.Cli_Nom,C.Cli_Email,C.Cli_Direccion,C.Aut_Marca,C.Aut_Modelo,C.Aut_Azo,C.Precio,C.Fecha_Creacion,TR.id_Cot,SUM(TR.Cantidad) AS Cantidad
+                        FROM cotizaciones As C 
+                        LEFT JOIN rel_cot_deps as TR ON C.id = TR.id_Cot
+                        GROUP BY C.id,C.Folio,C.Cli_Nom,C.Cli_Email,C.Cli_Direccion,C.Aut_Marca,C.Aut_Modelo,C.Aut_Azo,C.Precio,C.Fecha_Creacion,TR.id_Cot
+                        ORDER BY C.Fecha_Creacion;');
 ?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -83,7 +87,10 @@ $cotizaciones = DB::select('SELECT * FROM cotizaciones ORDER BY Folio');
                                         <th scope="col">Cliente</th>
                                         <th scope="col">Auto</th>
                                         <th scope="col">Precio</th>
+                                        <th scope="col">Cantidad</th>
                                         <th scope="col">Fecha Creacion</th>
+                                        <th scope="col">Editar</th>
+                                        <th scope="col">Abonar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,7 +100,18 @@ $cotizaciones = DB::select('SELECT * FROM cotizaciones ORDER BY Folio');
                                         <td>{{ $cot->Cli_Nom.', '.$cot->Cli_Email.', '.$cot->Cli_Direccion }}</td>
                                         <td>{{ $cot->Aut_Marca.' / '.$cot->Aut_Modelo.' / '.$cot->Aut_Azo }}</td>
                                         <td>${{ number_format($cot->Precio, 2, '.', ',') }}</td>
+                                        <td>${{ number_format($cot->Cantidad, 2, '.', ',') }}</td>
                                         <td>{{ date("d-m-Y", strtotime($cot->Fecha_Creacion)) }}</td>
+                                        <td>
+                                            <a href="{{ url('/Usuario/Editar/'.$cot->id) }}">
+                                                <button type="button" class="btn btn-primary col-12">EDITAR</button>
+                                            </a>        
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('/Usuario/Abonar/'.$cot->id) }}">
+                                                <button type="button" class="btn btn-success col-12">ABONAR</button>
+                                            </a>        
+                                        </td>
                                     </tr> 
                                     @endforeach
                                 </tbody>

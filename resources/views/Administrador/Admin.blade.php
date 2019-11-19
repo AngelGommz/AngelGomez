@@ -1,6 +1,10 @@
 <?php 
 use Illuminate\Support\Facades\DB;
-$depositos = DB::select('SELECT * FROM depositos ORDER BY Estatus');
+$depositos = DB::select('SELECT D.id,D.Descripcion,D.Total,D.Fecha_Creacion,SUM(TR.Cantidad) AS Cantidad 
+                            FROM depositos As D 
+                            LEFT JOIN rel_cot_deps as TR ON D.id = TR.id_Dep
+                            GROUP BY D.id,D.Descripcion,D.Total,D.Fecha_Creacion
+                            ORDER BY D.Fecha_Creacion;');
 ?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -57,6 +61,7 @@ $depositos = DB::select('SELECT * FROM depositos ORDER BY Estatus');
                                     <tr>
                                         <th scope="col">Descripcion</th>
                                         <th scope="col">Total</th>
+                                        <th scope="col">Pagado</th>
                                         <th scope="col">Fecha de Creación</th>
                                         <th scope="col">Estatus</th>
                                         <th scope="col">Editar</th>
@@ -68,30 +73,25 @@ $depositos = DB::select('SELECT * FROM depositos ORDER BY Estatus');
                                     <tr>
                                         <td>{{$dep->Descripcion }}</td>
                                         <td>${{number_format($dep->Total, 2, '.', ',')  }}</td>
+                                        <td>${{number_format($dep->Cantidad, 2, '.', ',')  }}</td>
                                         <td>{{date("d-m-Y", strtotime($dep->Fecha_Creacion)) }}</td>
-                                        @if($dep->Estatus == 0)
+                                        @if(number_format($dep->Total, 2, '.', ',') == number_format($dep->Cantidad, 2, '.', ','))
+                                        <td>PAGADO</td>
+                                        @else
                                         <td>PENDIENTE</td>
+                                        @endif
                                         <td>
                                             <a href="{{ url('/Admin/Editar/'.$dep->id) }}">
                                                 <button type="button" class="btn btn-primary col-12">EDITAR</button>
                                             </a>        
                                         </td>
+                                        @if(number_format($dep->Cantidad, 2, '.', ',') == 0)
                                         <td>
                                             <a href="{{ url('/Admin/Eliminar/'.$dep->id) }}">
                                                 <button type="button" class="btn btn-danger col-12">ELIMINAR</button>
                                             </a>
                                         </td>
-                                        @elseif($dep->Estatus == 1)
-                                        <td>ABONADO</td>
-                                        <td>
-                                            <a href="{{ url('/Admin/Editar/'.$dep->id) }}">
-                                                <button type="button" class="btn btn-primary col-12">EDITAR</button>
-                                            </a>
-                                        </td>
-                                        <td></td>
                                         @else
-                                        <td>PAGADO</td>
-                                        <td></td>
                                         <td></td>
                                         @endif
                                     </tr> 
