@@ -15,7 +15,9 @@ class CreateRelCotDepsTable extends Migration
     {
         Schema::create('rel_cot_deps', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->integer('id_Dep');
+            $table->integer('id_Cot');
+            $table->string('Cantidad', 10);
         });
     }
 

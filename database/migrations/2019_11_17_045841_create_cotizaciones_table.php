@@ -16,11 +16,14 @@ class CreateCotizacionesTable extends Migration
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('Folio',10);
-            $table->string('Cliente',60);
-            $table->string('Auto',30);
+            $table->string('Cli_Nom',60);
+            $table->string('Cli_Email',80);
+            $table->text('Cli_Direccion');
+            $table->string('Aut_Marca',30);
+            $table->string('Aut_Modelo',15);
+            $table->string('Aut_Azo',7);
             $table->string('Precio',10);
             $table->date('Fecha_Creacion');
-            $table->timestamps();
         });
     }
 

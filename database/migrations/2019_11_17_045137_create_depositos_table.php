@@ -18,7 +18,6 @@ class CreateDepositosTable extends Migration
             $table->string('Descripcion', 255);
             $table->string('Total', 10);
             $table->date('Fecha_Creacion');
-            $table->timestamps();
         });
     }
 
