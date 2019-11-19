@@ -72,7 +72,7 @@
 
                 <div class="links">
                     <a href="{{ url('/Admin') }}">ADMINISTRADOR</a>
-                    <a href="https://laracasts.com">USUARIO</a>
+                    <a href="{{ url('/Usuaruio') }}">USUARIO</a>
                 </div>
             </div>
         </div>

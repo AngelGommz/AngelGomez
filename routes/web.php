@@ -23,3 +23,6 @@ Route:: get('/Admin/Eliminar/{id}', 'ControladorForm@DeleteDep');
 Route:: get('/Admin/Editar/{id}', 'ControladorForm@UpdateDep');
 Route:: post('/Admin/Update/{id}', 'ControladorForm@UpdateDep2');
 
+
+Route:: get('/Usuario', 'ControladorForm@Usua');
+Route:: post('/Cotizacion', 'ControladorForm@InserCot');

@@ -22,6 +22,11 @@ $depositos = DB::select('SELECT * FROM depositos ORDER BY Estatus');
             <div class="content">
                 <div class="row">
                     <div class="col-12">
+                        <a href="{{ url('/')}}">
+                            <button type="button" class="btn btn-secondary">INICIO</button>                        
+                        </a>
+                    </div>
+                    <div class="col-12">
                         <h1 class="text-center">DEPOSITOS</h1>
                     </div>
                     <div class="col-md-6 offset-md-3">
@@ -32,11 +37,11 @@ $depositos = DB::select('SELECT * FROM depositos ORDER BY Estatus');
                             {!! csrf_field() !!}
                             <div class="form-group col-12">
                                 <label>DESCRIPCIÓN</label>
-                                <input type="text" class="form-control" name="DESCR">
+                                <input type="text" class="form-control" name="DESCR" autocomplete="off" required>
                             </div>
                             <div class="form-group col-6">
                                 <label>CANTIDAD</label>
-                                <input type="text" class="form-control" name="CANTI">
+                                <input type="number" class="form-control" name="CANTI" autocomplete="off" required>
                             </div>
                             <div class="form-group col-6">
                                 <label>FECHA</label>
@@ -62,8 +67,8 @@ $depositos = DB::select('SELECT * FROM depositos ORDER BY Estatus');
                                     @foreach($depositos as $dep)
                                     <tr>
                                         <td>{{$dep->Descripcion }}</td>
-                                        <td>${{$dep->Total }}</td>
-                                        <td>{{$dep->Fecha_Creacion }}</td>
+                                        <td>${{number_format($dep->Total, 2, '.', ',')  }}</td>
+                                        <td>{{date("d-m-Y", strtotime($dep->Fecha_Creacion)) }}</td>
                                         @if($dep->Estatus == 0)
                                         <td>PENDIENTE</td>
                                         <td>
